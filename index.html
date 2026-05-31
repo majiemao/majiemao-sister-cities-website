@@ -19,27 +19,28 @@
         }
 
         header {
-            background: linear-gradient(135deg, #c41e3a 0%, #003d82 100%);
-            color: white;
-            padding: 2rem;
+            /* 1. Ensure this matches the exact filename you uploaded (.jpg) */
+            background-image: url('world-map.jpg'); 
+            
+            /* 2. CRITICAL: Shifting the position to the right brings the continents behind your banner */
+            background-position: right center;
+            
+            /* 3. This stretches the image seamlessly across the screen from left to right */
+            background-size: cover; 
+            
+            background-repeat: no-repeat;
+            background-color: #1c2d42; /* Fallback dark blue that blends with the map's left side */
+            padding: 0;                
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            line-height: 0;            
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-
-        .header-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            margin-top: 0.5rem;
+        .header-banner {
+            width: 25%;
+            max-width: 1200px;         /* Keeps the banner looking sharp, aligning with your content container */
+            height: auto;              /* Maintains the perfect image proportions */
+            display: inline-block;
         }
 
         nav {
@@ -71,10 +72,48 @@
             color: #c41e3a;
         }
 
+ /* 1. Turns the main layout area into a 3-column desktop grid */
         .container {
-            max-width: 1200px;
+            max-width: 1600px; /* Expanded to make room for the side photos */
             margin: 0 auto;
             padding: 2rem;
+            display: grid;
+            grid-template-columns: 220px 1fr 220px; /* Left sidebar, Main Content, Right sidebar */
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        /* 2. Styling for the sidebars holding the photos */
+        .side-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 100px; /* Keeps photos pinned to the screen as the user scrolls */
+        }
+
+        .side-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border: 4px solid white; /* Adds a clean scrapbook-style frame */
+            transition: transform 0.3s;
+        }
+
+        .side-gallery img:hover {
+            transform: scale(1.05) rotate(1deg); /* Subtle pop effect on hover */
+        }
+
+        /* 3. Responsive fix: On tablets and mobile, hide the side images so they don't crowd the screen */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr; /* Reverts back to standard single column stacked layout */
+                max-width: 1200px;
+            }
+            .side-gallery {
+                display: none; /* Hides sidebars smoothly on small displays */
+            }
         }
 
         section {
@@ -289,14 +328,18 @@
 
         .city-image {
             width: 100%;
-            height: 200px;
+            height: 250px; /* Forces both boxes to have the exact same height */
             background: linear-gradient(135deg, #c41e3a 0%, #003d82 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
+            overflow: hidden; /* Keeps the image corners clean */
+}
+
+        /* This targets the actual image files you added */
+        .city-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crops the images perfectly so they don't stretch or squish */
+            display: block;
+}
 
         .city-info {
             padding: 1.5rem;
@@ -444,10 +487,8 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>🌉 St. Marys-Awaji City Sister Cities</h1>
-        <p>Building International Partnerships Since 1985</p>
-        <p class="header-subtitle">Connecting St. Marys, Ohio with Awaji City, Japan</p>
+<header>
+        <img src="StMarysAwajiCity.png" alt="St Marys - Awaji City Sister Cities Organization Banner" class="header-banner">
     </header>
 
     <nav>
@@ -460,43 +501,42 @@
         </ul>
     </nav>
 
-    <div class="container">
-        <!-- Home Section -->
-        <section id="home">
-            <h2>Welcome</h2>
-            <div class="about-content">
-                <p>
-                    The St. Marys-Awaji City Sister Cities Organization is proud to foster cultural, educational, and social 
-                    exchanges between St. Marys, Ohio and Awaji City, Japan. Since our partnership was established in 1985, 
-                    we have facilitated meaningful connections between our communities.
-                </p>
-                <p>
-                    Our organization organizes delegations, cultural events, and educational exchanges that strengthen the 
-                    bonds between our two communities. We welcome individuals interested in learning about Japanese culture, 
-                    making international friends, and participating in our delegation trips.
-                </p>
-            </div>
-        </section>
+<div class="container">
+        
+        <!-- ================= LEFT SIDE PHOTOS ================= -->
+        <aside class="side-gallery">
+            <img src="1987.jpg" alt="1st Official Delegation to Japan 1987">
+            <img src="YMCA.jpg" alt="Group photo at YMCA delegation">
+            <img src="Bridge.jpg" alt="Group photo at covered bridge of youth delegation">
+        </aside>
+
+        <!-- ================= MAIN CONTENT WRAPPER ================= -->
+        <!-- This wrapper holds your sections together so they stay perfectly centered -->
+        <main class="main-content-column">
+
+            <!-- Home Section -->
+            <section id="home">
+                <h2>Welcome</h2>
+                <div class="about-content">
+                    <p>
+                        The St. Marys-Awaji City Sister Cities Organization is proud to foster cultural, educational, and social 
+                        exchanges between St. Marys, Ohio and Awaji City, Japan. Since our partnership was established in 1985, 
+                        we have facilitated meaningful connections between our communities.
+                    </p>
+                    <p>
+                        Our organization organizes delegations, cultural events, and educational exchanges that strengthen the 
+                        bonds between our two communities. We welcome individuals interested in learning about Japanese culture, 
+                        making international friends, and participating in our delegation trips.
+                    </p>
+                </div>
+            </section>
 
         <!-- Calendar Section -->
         <section id="calendar">
-            <h2>Events Calendar</h2>
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <h3>Upcoming Events</h3>
-                    <div class="calendar-nav">
-                        <button onclick="previousMonth()">← Previous</button>
-                        <div class="current-month" id="monthYear"></div>
-                        <button onclick="nextMonth()">Next →</button>
-                    </div>
+                <h2>Events Calendar</h2>
+                <div class="calendar-container">
+                <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
                 </div>
-                <div class="calendar" id="calendar"></div>
-            </div>
-
-            <div class="events-section">
-                <h3 style="color: #003d82; margin-bottom: 1.5rem;">Upcoming Events</h3>
-                <div id="eventsList"></div>
-            </div>
         </section>
 
         <!-- About Section -->
@@ -528,37 +568,42 @@
             </div>
         </section>
 
-        <!-- Cities Section -->
-        <section id="cities">
-            <h2>Our Sister Cities</h2>
-            <div class="cities-grid">
-                <div class="city-card">
-                    <div class="city-image">🗽</div>
-                    <div class="city-info">
-                        <h3>St. Marys, Ohio</h3>
-                        <p><strong>Population:</strong> ~8,200</p>
-                        <p><strong>Location:</strong> Auglaize County, Ohio</p>
-                        <p>A vibrant community in northwest Ohio with a rich history and strong sense of community pride.</p>
-                        <div class="partnership-details">
-                            <strong style="color: #c41e3a;">Sister City Partner Since 1985</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="city-card">
-                    <div class="city-image">🏯</div>
-                    <div class="city-info">
-                        <h3>Awaji City, Japan</h3>
-                        <p><strong>Population:</strong> ~160,000</p>
-                        <p><strong>Location:</strong> Hyogo Prefecture, Japan</p>
-                        <p>A beautiful island city known for its natural scenery, cultural heritage, and warm hospitality.</p>
-                        <div class="partnership-details">
-                            <strong style="color: #c41e3a;">Sister City Partner Since 1985</strong>
-                        </div>
-                    </div>
+<section id="cities">
+    <h2>Our Sister Cities</h2>
+    
+    <div class="cities-grid">
+        
+        <div class="city-card">
+            <div class="city-image">
+                <img src="StMarys.jpg" alt="Scenic view of St. Marys, Ohio" />
+            </div>
+            <div class="city-info">
+                <h3>St. Marys, Ohio</h3>
+                <p><strong>Population:</strong> ~8,200</p>
+                <p><strong>Location:</strong> Auglaize County, Ohio</p>
+                <p>A vibrant community in northwest Ohio with a rich history and strong sense of community pride.</p>
+                <div class="partnership-details">
+                    <strong style="color: #c41e3a;">Sister City Partner Since 1985</strong>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <div class="city-card">
+            <div class="city-image">
+                <img src="Awaji.jpg" alt="Scenic view of Awaji City, Japan" />
+            </div>
+            <div class="city-info">
+                <h3>Awaji City, Japan</h3>
+                <p><strong>Population:</strong> ~160,000</p>
+                <p><strong>Location:</strong> Hyogo Prefecture, Japan</p>
+                <p>A beautiful island city known for its natural scenery, cultural heritage, and warm hospitality.</p>
+                <div class="partnership-details">
+                    <strong style="color: #c41e3a;">Sister City Partner Since 1985</strong>
+                </div>
+            </div>
+        </div>
+
+    </div> </section>
 
         <!-- Contact Section -->
         <section id="contact">
@@ -620,6 +665,13 @@
                 </div>
             </div>
         </section>
+        </main>
+        <!-- ================= RIGHT SIDE PHOTOS ================= -->
+     <aside class="side-gallery">
+         <img src="Shinto.jpg" alt="Shinto Festival Float Showcase">
+         <img src="Recital.jpg" alt="Sister Cities Cultural Piano Recital">
+         <img src="Shrine.jpg" alt="Awaji City Lantern">
+     </aside>
     </div>
 
     <footer>
