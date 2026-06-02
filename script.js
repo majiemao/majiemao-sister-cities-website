@@ -112,9 +112,35 @@ function nextMonth() {
     renderCalendar();
 }
 
-function handleSubmit(event) {
-    event.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
+function handleMailtoSubmit(event) {
+    event.preventDefault(); // Prevents the webpage from reloading
+    
+    // 1. Get the values the user typed in
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value || "Not provided";
+    const interest = document.getElementById('interest').value || "General Inquiry";
+    const message = document.getElementById('message').value;
+    
+    // 2. Set up the email destination and subject line
+    const coordinatorEmail = "thebayhamfarm@nktelco.net";
+    const subject = encodeURIComponent(`Sister Cities Contact: ${interest}`);
+    
+    // 3. Format the body of the email neatly
+    const bodyText = `Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Interest: ${interest}
+
+Message:
+${message}`;
+
+    const body = encodeURIComponent(bodyText);
+    
+    // 4. Trigger the user's local email application
+    window.location.href = `mailto:${coordinatorEmail}?subject=${subject}&body=${body}`;
+    
+    // 5. Clear the form fields
     event.target.reset();
 }
 
